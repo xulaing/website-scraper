@@ -40,7 +40,7 @@ def get_links(url, depth, cursor, conn):
 
                 for link in links:
                     href = link.get('href')
-                    # Check if the URL is absolute, belongs to the xmco.fr domain, and is not already recorded
+                    # Check if the URL is absolute and valid, belongs to the xmco.fr domain, and is not already in the database
                     if "mailto:" not in href and not href.startswith("#") and is_absolute_url(href) and "www.xmco.fr" in href and not cursor.execute("SELECT 1 FROM page_url WHERE url = ?", (normalize_url(href),)).fetchone():
                         # Get links from the new URL + increase depth
                         get_links(href, depth + 1, cursor, conn)
